@@ -91,8 +91,8 @@ frameno = 0
 filename = "video_Trim.mp4"
 yolo = "yolo-coco"
 opname = "Output1.mp4"
-cap = cv2.VideoCapture(filename)
-#cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(filename)
+cap = cv2.VideoCapture(0)
 time1 = time.time()
 while(True):
 
@@ -114,8 +114,8 @@ while(True):
             #30
             create = cv2.VideoWriter(opname, fourcc, 6, (Frame.shape[1], Frame.shape[0]), True)
     
-    #create.write(Frame)
-    #cv2.imshow('frame', Frame)
+    create.write(Frame)
+    cv2.imshow('frame', Frame)
     
 
     if cv2.waitKey(1) & 0xFF == ord('s'):

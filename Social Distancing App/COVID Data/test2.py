@@ -95,7 +95,8 @@ def getLatestByNation(ENDPOINT, AREA_TYPE, DATE):
 def latestGraphByRegion():
         ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
         AREA_TYPE = "region"
-        DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
+        #DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
+        DATE = "2021-01-31"
         df = getLatestByRegion(ENDPOINT, AREA_TYPE, DATE)
         print(df)
 
@@ -131,8 +132,10 @@ def latestGraphByRegion():
 def latestGraphByNation():
         ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
         AREA_TYPE = "nation"
-        DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
+        #DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
+        DATE = "2021-01-31"
         df = getLatestByNation(ENDPOINT, AREA_TYPE,DATE)
+        print(df)
 
         sns.barplot(data=df, x="areaName", y="newCases");
         plt.xlabel('')

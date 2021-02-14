@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, render_template
+import dataScraper
 
 app = Flask(__name__)
 
@@ -7,18 +8,20 @@ app = Flask(__name__)
 @app.route('/index')
 @app.route('/')
 def welcome():
-    return 'welcome'
+    return render_template('home.html')
 
 
 @app.route('/about')
 def about():
-    return 'About the Covid-19 analysis platform'
+    return render_template('about.html')
 
 
 @app.route('/country')
 @app.route('/nation')
 def nation():
-    return 'Covid-19 data by nation'
+    dataScraper.latestGraphByNation()
+    return render_template('nation.html', newCasesUrl='static/images/nation1.png',
+                           newDeathsUrl='static/images/nation2.png', title='nation')
 
 
 @app.route('/county')
@@ -28,5 +31,4 @@ def region():
 
 
 if __name__ == '__main__':
-
     app.run()
