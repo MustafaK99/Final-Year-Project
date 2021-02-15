@@ -135,6 +135,8 @@ def latestGraphByNation():
         #DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
         DATE = "2021-01-31"
         df = getLatestByNation(ENDPOINT, AREA_TYPE,DATE)
+
+        
         print(df)
 
         sns.barplot(data=df, x="areaName", y="newCases");
@@ -146,8 +148,11 @@ def latestGraphByNation():
         sns.despine();
         plt.show()
 
-
-
+        areaName = df['areaName'].values.tolist()
+        newCases = df['newCases'].values.tolist()
+        print(areaName)
+        print(newCases)
+        
         
 
         sns.barplot(data=df, x="areaName", y="newDeaths");

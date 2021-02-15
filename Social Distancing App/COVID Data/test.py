@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     endpoint = (
         'https://api.coronavirus.data.gov.uk/v1/data?'
-        'filters=areaType=region;date={}&'.format(date)
+        'filters=areaType=nation 
         'structure={"areaName":"areaName","date":"date","newCases":"newCasesByPublishDate"}'
     )
     
@@ -34,6 +34,11 @@ if __name__ == '__main__':
         print('date: ' + p['date'])
         print('New Cases: ' + str(p['newCases']))
 
+
+    areaNames = df['areaName'].values.tolist()
+    print(areaNames)
+    newCases = df('newCases'].values.tolist()
+    print(newCases)
 
 
     
