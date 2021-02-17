@@ -32,7 +32,7 @@ def getLatestByRegion(ENDPOINT, AREA_TYPE, DATE):
         "structure": dumps(structure, separators=(",", ":"))
     }
 
-    response = get(ENDPOINT, params=api_params, timeout=10)
+    response = get(ENDPOINT, params=api_params, timeout=25)
 
     if response.status_code >= 400:
         raise RuntimeError(f'Request failed: {response.text}')
@@ -68,7 +68,7 @@ def getLatestByNation(ENDPOINT, AREA_TYPE, DATE):
         "structure": dumps(structure, separators=(",", ":"))
     }
 
-    response = get(ENDPOINT, params=api_params, timeout=10)
+    response = get(ENDPOINT, params=api_params)
 
     if response.status_code >= 400:
         raise RuntimeError(f'Request failed: {response.text}')
@@ -113,7 +113,7 @@ def latestGraphByNation():
     ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
     AREA_TYPE = "nation"
     # DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
-    DATE = "2021-02-14"
+    DATE = "2021-02-17"
     df = getLatestByNation(ENDPOINT, AREA_TYPE, DATE)
 
     areaName = df['areaName'].values.tolist()
