@@ -81,3 +81,9 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form)
+
+
+@app.route("/detection")
+@login_required
+def new_detection():
+    return render_template('detection.html', title='New detection')
