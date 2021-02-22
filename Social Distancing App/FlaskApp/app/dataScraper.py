@@ -7,8 +7,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-#now = datetime.now()
-#today4pm = now.replace
+
+# now = datetime.now()
+# today4pm = now.replace
 
 
 def getLatestByRegion(ENDPOINT, AREA_TYPE, DATE):
@@ -87,7 +88,7 @@ def latestGraphByRegion():
     # DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
     DATE = "2021-01-31"
     df = getLatestByRegion(ENDPOINT, AREA_TYPE, DATE)
-    #print(df)
+    # print(df)
 
     sns.barplot(data=df, x="areaName", y="newCases");
     plt.xlabel('')
@@ -96,7 +97,7 @@ def latestGraphByRegion():
     plt.title('Number of new cases recorded on {} in England by Region'.format(DATE))
     plt.xticks(size=9)
     sns.despine();
-    #plt.show()
+    # plt.show()
     plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images//region1.png')
 
     sns.barplot(data=df, x="areaName", y="newDeaths");
@@ -106,8 +107,9 @@ def latestGraphByRegion():
     plt.title('Number of new deaths recorded on {} in England by Region'.format(DATE))
     plt.xticks(size=9)
     sns.despine();
-    #plt.show()
+    # plt.show()
     plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/region2.png')
+
 
 def latestGraphByNation():
     ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
@@ -120,8 +122,7 @@ def latestGraphByNation():
     newCases = df['newCases'].values.tolist()
     newDeaths = df['newDeaths'].values.tolist()
 
-
-    #print(df)
+    # print(df)
 
     sns.barplot(data=df, x="areaName", y="newCases");
     plt.xlabel('')
@@ -131,13 +132,13 @@ def latestGraphByNation():
     plt.xticks(size=9)
     sns.despine();
     fig = plt.figure()
-    fig.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png')
+    #fig.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png')
     plt.show()
 
-    #fileNameImg1 = "C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png"
-    #if os.path.isfile(fileNameImg1):
-     #   os.remove(fileNameImg1)
-    #plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png')
+    # fileNameImg1 = "C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png"
+    # if os.path.isfile(fileNameImg1):
+    #   os.remove(fileNameImg1)
+    # plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png')
     plt.close()
 
     sns.barplot(data=df, x="areaName", y="newDeaths");
@@ -149,13 +150,13 @@ def latestGraphByNation():
     sns.despine()
 
     fig = plt.figure()
-    fig.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png')
+    #fig.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png')
     plt.show()
 
-   # fileNameImg1 = "C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png"
-    #if os.path.isfile(fileNameImg1):
-     #   os.remove(fileNameImg1)
-    #plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png')
+    # fileNameImg1 = "C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png"
+    # if os.path.isfile(fileNameImg1):
+    #   os.remove(fileNameImg1)
+    # plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png')
     plt.close()
 
     return areaName, newCases, newDeaths

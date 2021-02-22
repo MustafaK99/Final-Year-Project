@@ -1,10 +1,7 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import RegistrationForm, LoginForm
-import dataScraper
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = '6e42af73537c607675cb4cc78e3959e8'
+from flask import render_template, url_for, flash, redirect
+from app import app, dataScraper
+from app.forms import RegistrationForm, LoginForm
+from app.models import User, Detections
 
 
 @app.route('/home')
@@ -48,7 +45,3 @@ def login():
         flash(f'logged in', 'Success')
         return redirect(url_for('welcome'))
     return render_template('login.html', title='login', form=form)
-
-
-if __name__ == '__main__':
-    app.run()
