@@ -1,8 +1,12 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, Response
+from app.social_distance_advanced import Detection
 from app import app, dataScraper, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, UpdatedAccountInfoForm
 from app.models import User, Detections
 from flask_login import login_user, current_user, logout_user, login_required
+
+
+detector = Detection()
 
 
 @app.route('/home')
@@ -87,3 +91,17 @@ def account():
 @login_required
 def new_detection():
     return render_template('detection.html', title='New detection')
+
+
+def gen(social_distance_advanced):
+    while True:
+        frame = social_distance_advanced.startProcess()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+@app.route("/video_feed")
+@login_required
+def video_feed():
+    return Response(gen(detector),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
