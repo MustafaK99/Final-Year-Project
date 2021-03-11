@@ -24,8 +24,8 @@ def about():
 @app.route('/country')
 @app.route('/nation')
 def nation():
-    area_name, new_cases, new_deaths = dataScraper.latestGraphByNation()
-    return render_template('nation.html', area_name=area_name, new_cases=new_cases, new_deaths=new_deaths)
+    area_name, new_cases, new_deaths, cumulative = dataScraper.latestGraphByNation()
+    return render_template('nation.html', area_name=area_name, new_cases=new_cases, new_deaths=new_deaths, cumulative=cumulative)
 
 
 @app.route('/county')

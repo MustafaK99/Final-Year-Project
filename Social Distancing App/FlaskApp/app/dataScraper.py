@@ -90,73 +90,20 @@ def latestGraphByRegion():
     df = getLatestByRegion(ENDPOINT, AREA_TYPE, DATE)
     # print(df)
 
-    sns.barplot(data=df, x="areaName", y="newCases");
-    plt.xlabel('')
-    plt.ylabel('New cases')
-    plt
-    plt.title('Number of new cases recorded on {} in England by Region'.format(DATE))
-    plt.xticks(size=9)
-    sns.despine();
-    # plt.show()
-    plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images//region1.png')
-
-    sns.barplot(data=df, x="areaName", y="newDeaths");
-    plt.xlabel('')
-    plt.ylabel('New Deaths')
-    plt
-    plt.title('Number of new deaths recorded on {} in England by Region'.format(DATE))
-    plt.xticks(size=9)
-    sns.despine();
-    # plt.show()
-    plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/region2.png')
-
-
 def latestGraphByNation():
     ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
     AREA_TYPE = "nation"
     # DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
-    DATE = "2021-02-17"
+    DATE = "2021-03-11"
     df = getLatestByNation(ENDPOINT, AREA_TYPE, DATE)
+
 
     areaName = df['areaName'].values.tolist()
     newCases = df['newCases'].values.tolist()
     newDeaths = df['newDeaths'].values.tolist()
+    cumulative = df['cumulative'].values.tolist()
 
     # print(df)
 
-    sns.barplot(data=df, x="areaName", y="newCases");
-    plt.xlabel('')
-    plt.ylabel('New cases')
-    plt
-    plt.title('Number of new cases recorded on {} in the UK by nation'.format(DATE))
-    plt.xticks(size=9)
-    sns.despine();
-    fig = plt.figure()
-    #fig.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png')
-    plt.show()
 
-    # fileNameImg1 = "C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png"
-    # if os.path.isfile(fileNameImg1):
-    #   os.remove(fileNameImg1)
-    # plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation1.png')
-    plt.close()
-
-    sns.barplot(data=df, x="areaName", y="newDeaths");
-    plt.xlabel('')
-    plt.ylabel('New Deaths')
-    plt
-    plt.title('Number of new deaths recorded on {} in the UK by nation'.format(DATE))
-    plt.xticks(size=9)
-    sns.despine()
-
-    fig = plt.figure()
-    #fig.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png')
-    plt.show()
-
-    # fileNameImg1 = "C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png"
-    # if os.path.isfile(fileNameImg1):
-    #   os.remove(fileNameImg1)
-    # plt.savefig('C:/Final Year/FYP/Final-Year-Project/Social Distancing App/FlaskApp/static/images/nation2.png')
-    plt.close()
-
-    return areaName, newCases, newDeaths
+    return areaName, newCases, newDeaths, cumulative

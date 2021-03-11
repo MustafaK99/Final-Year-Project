@@ -6,6 +6,9 @@
 
     <div> <canvas id="chart"></canvas> </div>
 
+    <div> <canvas id="chart2"></canvas></div>
+
+    <div> <canvas id="chart3"></canvas></div>
 
         <script>
 
@@ -53,6 +56,102 @@
              });
 
         </script>
+
+         <script>
+         var barData = {
+                labels: [
+                    {%  for item in area_name %}
+                        "{{ item }}",
+                    {% endfor %}
+                ],
+            datasets: [{
+                   label: 'UK Countries',
+                   data: [
+                       {% for item in new_deaths %}
+                            "{{ item }}",
+                       {% endfor %},
+
+
+                   ],
+                backgroundColor: 'rgba(132,255,99)',
+                borderColor: 'rgba(132,255,99)'
+
+
+            }]
+
+
+
+            }
+             var ctx =  document.getElementById("chart2").getContext("2d");
+             var myChart = new Chart(ctx,{
+                 type: 'bar',
+                 data: barData,
+                 options:{
+                     responsive: true,
+                     legend: {
+                         position: 'top',
+                     },
+                     title:{
+                         display: true,
+                         text: 'Chart showing new deaths for today'
+                     },
+
+
+
+                 }
+
+             });
+        </script>
+
+         <script>
+         var barData = {
+                labels: [
+                    {%  for item in area_name %}
+                        "{{ item }}",
+                    {% endfor %}
+                ],
+            datasets: [{
+                   label: 'UK Countries',
+                   data: [
+                       {% for item in cumulative %}
+                            "{{ item }}",
+                       {% endfor %},
+
+
+                   ],
+                backgroundColor: 'rgba(99,232,255)',
+                borderColor: 'rgba(99,232,255)'
+
+
+            }]
+
+
+
+            }
+             var ctx =  document.getElementById("chart3").getContext("2d");
+             var myChart = new Chart(ctx,{
+                 type: 'bar',
+                 data: barData,
+                 options:{
+                     responsive: true,
+                     legend: {
+                         position: 'top',
+                     },
+                     title:{
+                         display: true,
+                         text: 'Chart showing cumulative number of cases for each nation in the UK'
+                     }
+
+
+                 }
+
+             });
+    </script>
+
+
+
+
+
 
 
 
