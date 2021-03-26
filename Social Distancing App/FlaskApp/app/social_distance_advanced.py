@@ -8,6 +8,7 @@ import time
 class Detection(object):
     def __init__(self):
         self.video = cv2.VideoCapture(0)
+        self.Number = 0
 
     def __del__(self):
         self.video.release()
@@ -22,9 +23,9 @@ class Detection(object):
 
     def Setup(self, yolo):
         global net, ln, LABELS
-        #weights = os.path.sep.join([yolo, "yolov3.weights"])
-        #config = os.path.sep.join([yolo, "yolov3.cfg"])
-        #labelsPath = os.path.sep.join([yolo, "coco.names"])
+        # weights = os.path.sep.join([yolo, "yolov3.weights"])
+        # config = os.path.sep.join([yolo, "yolov3.cfg"])
+        # labelsPath = os.path.sep.join([yolo, "coco.names"])
         weights = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'yolo-coco', 'yolov3.weights')
         config = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'yolo-coco', 'yolov3.cfg')
         labelsPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'yolo-coco', 'coco.names')
@@ -42,10 +43,7 @@ class Detection(object):
             (H, W) = frame.shape[:2]
             blob = cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416), swapRB=True, crop=False)
             net.setInput(blob)
-            starttime = time.time()
             layerOutputs = net.forward(ln)
-            stoptime = time.time()
-            print("Video is Getting Processed at {:.4f} seconds per frame".format((stoptime - starttime)))
             confidences = []
             outline = []
 
@@ -70,6 +68,7 @@ class Detection(object):
             pairs = []
             center = []
             status = []
+            violation = 0
             for i in flat_box:
                 (x, y) = (outline[i][0], outline[i][1])
                 (w, h) = (outline[i][2], outline[i][3])
@@ -106,7 +105,7 @@ class Detection(object):
         yolo = "yolo-coco"
         opname = "Output1.mp4"
         # cap = cv2.VideoCapture(filename)
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
         time1 = time.time()
         while (True):
 
@@ -122,10 +121,9 @@ class Detection(object):
                 self.Setup(yolo)
                 self.ImageProcess(current_img)
                 Frame = processedImg
-
+                self.Number = self.Number + 1
                 if create is None:
                     fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-                    # 30
                     create = cv2.VideoWriter(opname, fourcc, 6, (Frame.shape[1], Frame.shape[0]), True)
 
             create.write(Frame)
@@ -136,7 +134,9 @@ class Detection(object):
             if cv2.waitKey(1) & 0xFF == ord('s'):
                 break
         time2 = time.time()
-        print("Completed. Total Time Taken: {} minutes".format((time2 - time1) / 60))
 
         cap.release()
         cv2.destroyAllWindows()
+
+    def numberTest(self):
+        print(self.Number)

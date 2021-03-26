@@ -2,11 +2,15 @@ from flask import render_template, url_for, flash, redirect, request, Response
 from app.social_distance_advanced import Detection
 from app import app, dataScraper, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, UpdatedAccountInfoForm
-from app.models import User, Detections
+from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
-
+import json
+import random
+import time
+from datetime import datetime
 
 detector = Detection()
+random.seed()
 
 
 @app.route('/home')
@@ -25,13 +29,16 @@ def about():
 @app.route('/nation')
 def nation():
     area_name, new_cases, new_deaths, cumulative = dataScraper.latestGraphByNation()
-    return render_template('nation.html', area_name=area_name, new_cases=new_cases, new_deaths=new_deaths, cumulative=cumulative)
+    return render_template('nation.html', area_name=area_name, new_cases=new_cases, new_deaths=new_deaths,
+                           cumulative=cumulative)
 
 
 @app.route('/county')
 @app.route('/region')
 def region():
-    return render_template('region.html')
+    area_name, new_cases, new_deaths, cumulative = dataScraper.latestGraphByRegion()
+    return render_template('region.html', area_name=area_name, new_cases=new_cases, new_deaths=new_deaths,
+                           cumulative=cumulative)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -105,3 +112,6 @@ def gen(social_distance_advanced):
 def video_feed():
     return Response(gen(detector),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+

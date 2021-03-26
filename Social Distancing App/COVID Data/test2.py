@@ -1,10 +1,12 @@
 from requests import get
 from json import dumps
-from datetime import datetime
-import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+import pytz
+
 
 
 
@@ -93,35 +95,40 @@ def getLatestByNation(ENDPOINT, AREA_TYPE, DATE):
 
         
 def latestGraphByRegion():
-        ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
-        AREA_TYPE = "region"
-        #DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
-        DATE = "2021-01-31"
-        df = getLatestByRegion(ENDPOINT, AREA_TYPE, DATE)
-        print(df)
+       ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
+       AREA_TYPE = "region"
+       Now = (datetime.now(pytz.timezone('Europe/London')))
+       currentNow = Now.strftime("%H:%M:%S")
+       if (currentNow >= "16:00:00"):
+         DATE = (datetime.today().strftime('%Y-%m-%d'))
+       else:
+         DATE = datetime.now() - timedelta(days=1)
+         DATE = DATE.strftime('%Y-%m-%d')
+
+       df = getLatestByRegion(ENDPOINT, AREA_TYPE, DATE)
+       areaName = df['areaName'].values.tolist()
+       newCases = df['newCases'].values.tolist()
+       newDeaths = df['newDeaths'].values.tolist()
+       cumulative = df['cumDeaths'].values.tolist()
+       print(df)
 
        
-        sns.barplot(data=df, x="areaName", y="newCases");
-        plt.xlabel('')
-        plt.ylabel('New cases')
-        plt
-        plt.title('Number of new cases recorded on {} in England by Region'.format(DATE))
-        plt.xticks(size=9)
-        sns.despine();
-        plt.show()
-
-
-
-        
-
-        sns.barplot(data=df, x="areaName", y="newDeaths");
-        plt.xlabel('')
-        plt.ylabel('New Deaths')
-        plt
-        plt.title('Number of new deaths recorded on {} in England by Region'.format(DATE))
-        plt.xticks(size=9)
-        sns.despine();
-        plt.show()
+       sns.barplot(data=df, x="areaName", y="newCases");
+       plt.xlabel('')
+       plt.ylabel('New cases')
+       plt
+       plt.title('Number of new cases recorded on {} in England by Region'.format(DATE))
+       plt.xticks(size=9)
+       sns.despine();
+       plt.show()
+       sns.barplot(data=df, x="areaName", y="newDeaths");
+       plt.xlabel('')
+       plt.ylabel('New Deaths')
+       plt
+       plt.title('Number of new deaths recorded on {} in England by Region'.format(DATE))
+       plt.xticks(size=9)
+       sns.despine();
+       plt.show()
 
 
 
@@ -150,8 +157,6 @@ def latestGraphByNation():
 
         areaName = df['areaName'].values.tolist()
         newCases = df['newCases'].values.tolist()
-        print(areaName)
-        print(newCases)
         
         
 
@@ -170,7 +175,7 @@ def latestGraphByNation():
         
 
 latestGraphByRegion()
-latestGraphByNation()
+#latestGraphByNation()
 
 
 

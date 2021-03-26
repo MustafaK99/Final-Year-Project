@@ -1,11 +1,11 @@
 from requests import get
 from json import dumps
-from datetime import datetime
-import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import pytz
 
 
 # now = datetime.now()
@@ -85,16 +85,35 @@ def getLatestByNation(ENDPOINT, AREA_TYPE, DATE):
 def latestGraphByRegion():
     ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
     AREA_TYPE = "region"
-    # DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
-    DATE = "2021-01-31"
+    Now = (datetime.now(pytz.timezone('Europe/London')))
+    currentNow = Now.strftime("%H:%M:%S")
+    if (currentNow >= "16:00:00"):
+        DATE = (datetime.today().strftime('%Y-%m-%d'))
+    else:
+        DATE = datetime.now() - timedelta(days=1)
+        DATE = DATE.strftime('%Y-%m-%d')
+
     df = getLatestByRegion(ENDPOINT, AREA_TYPE, DATE)
-    # print(df)
+    areaName = df['areaName'].values.tolist()
+    newCases = df['newCases'].values.tolist()
+    newDeaths = df['newDeaths'].values.tolist()
+    cumulative = df['cumDeaths'].values.tolist()
+
+    return areaName, newCases, newDeaths, cumulative
+
+
 
 def latestGraphByNation():
     ENDPOINT = "https://api.coronavirus.data.gov.uk/v1/data"
     AREA_TYPE = "nation"
-    # DATE = (datetime.datetime.today().strftime('%Y-%m-%d'))
-    DATE = "2021-03-11"
+
+    Now = (datetime.now(pytz.timezone('Europe/London')))
+    currentNow = Now.strftime("%H:%M:%S")
+    if(currentNow >= "16:00:00"):
+        DATE = (datetime.today().strftime('%Y-%m-%d'))
+    else:
+        DATE = datetime.now() - timedelta(days=1)
+        DATE = DATE.strftime('%Y-%m-%d')
     df = getLatestByNation(ENDPOINT, AREA_TYPE, DATE)
 
 
@@ -102,8 +121,6 @@ def latestGraphByNation():
     newCases = df['newCases'].values.tolist()
     newDeaths = df['newDeaths'].values.tolist()
     cumulative = df['cumulative'].values.tolist()
-
-    # print(df)
 
 
     return areaName, newCases, newDeaths, cumulative

@@ -33,7 +33,7 @@ def ImageProcess(image):
     starttime = time.time()
     layerOutputs = net.forward(ln)
     stoptime = time.time()
-    print("Video is Getting Processed at {:.4f} seconds per frame".format((stoptime-starttime))) 
+    #print("Video is Getting Processed at {:.4f} seconds per frame".format((stoptime-starttime))) 
     confidences = []
     outline = []
     
@@ -78,7 +78,7 @@ def ImageProcess(image):
             (x, y) = (outline[i][0], outline[i][1])
             (w, h) = (outline[i][2], outline[i][3])
             if status[index] == True:
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 150), 2)
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 155), 2)
             elif status[index] == False:
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
             index += 1
@@ -88,7 +88,7 @@ def ImageProcess(image):
             
 create = None
 frameno = 0
-filename = "video_Trim.mp4"
+filename = "video.mp4"
 yolo = "yolo-coco"
 opname = "Output1.mp4"
 #cap = cv2.VideoCapture(filename)
@@ -108,6 +108,7 @@ while(True):
         Setup(yolo)
         ImageProcess(current_img)
         Frame = processedImg
+        cv2.imshow('frame', Frame)
 
         if create is None:
             fourcc = cv2.VideoWriter_fourcc(*'MP4V')
