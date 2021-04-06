@@ -25,8 +25,6 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("Email unavailable, please try again")
 
 
-
-
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -52,3 +50,5 @@ class UpdatedAccountInfoForm(FlaskForm):
                 raise ValidationError("Email unavailable, please try again")
 
 
+class DetectionMade(FlaskForm):
+    submit = SubmitField("End Detection")

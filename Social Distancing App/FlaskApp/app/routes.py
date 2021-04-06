@@ -1,8 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request, Response
 from app.social_distance_advanced import Detection
 from app import app, dataScraper, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdatedAccountInfoForm
-from app.models import User
+from app.forms import RegistrationForm, LoginForm, UpdatedAccountInfoForm, DetectionMade
+from app.models import User, Detections
 from flask_login import login_user, current_user, logout_user, login_required
 import json
 import random
@@ -59,14 +59,14 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('welcome'))
+        return redirect(url_for('detection_made'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('welcome'))
+            return redirect(next_page) if next_page else redirect(url_for('detection_made'))
         else:
             flash('Login Unsuccessful, email and/or password are incorrect please try again', 'danger')
     return render_template('login.html', title='login', form=form)
@@ -94,10 +94,34 @@ def account():
     return render_template('account.html', title='Account', form=form)
 
 
-@app.route("/detection")
+@app.route("/detectionsMade")
+@login_required
+def detection_made():
+    user = current_user
+    detections = user.detections
+    return render_template('detectionsMade.html', title='Detections made', detections=detections)
+
+
+@app.route("/graph")
+@login_required
+def graphs():
+    user = current_user
+    detections = user.detections
+    return render_template("graph.html", title='Graphical breakdown', detections=detections)
+
+
+@app.route("/detection", methods=['Get', 'POST'])
 @login_required
 def new_detection():
-    return render_template('detection.html', title='New detection')
+    form = DetectionMade()
+    if form.validate_on_submit():
+        NumberOfTotalViolations = detector.getNumberOfViolations()
+        detection = Detections(numberOfViolations=NumberOfTotalViolations, user=current_user)
+        db.session.add(detection)
+        db.session.commit()
+        flash('detection complete', 'success')
+        return redirect(url_for('detection_made'))
+    return render_template('detection.html', title='New detection', form=form)
 
 
 def gen(social_distance_advanced):
@@ -112,6 +136,3 @@ def gen(social_distance_advanced):
 def video_feed():
     return Response(gen(detector),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
-
-
-

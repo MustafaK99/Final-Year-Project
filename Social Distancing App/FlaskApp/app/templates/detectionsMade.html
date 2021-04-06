@@ -1,0 +1,14 @@
+{%  extends "layout.html" %}
+{% block content %}
+    {% for detection in detections %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2">Number of violations made : {{ detection.numberOfViolations }}</a>
+              <small class="text-muted">{{ detection.date_posted }}</small>
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+
+{% endblock content %}

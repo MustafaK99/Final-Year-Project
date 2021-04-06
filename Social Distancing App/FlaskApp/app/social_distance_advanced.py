@@ -8,7 +8,7 @@ import time
 class Detection(object):
     def __init__(self):
         self.video = cv2.VideoCapture(0)
-        self.Number = 0
+        self.NumberOfViolations = 0
 
     def __del__(self):
         self.video.release()
@@ -68,7 +68,6 @@ class Detection(object):
             pairs = []
             center = []
             status = []
-            violation = 0
             for i in flat_box:
                 (x, y) = (outline[i][0], outline[i][1])
                 (w, h) = (outline[i][2], outline[i][3])
@@ -83,6 +82,7 @@ class Detection(object):
                         pairs.append([center[i], center[j]])
                         status[i] = True
                         status[j] = True
+                        self.NumberOfViolations = self.NumberOfViolations + 1
             index = 0
 
             for i in flat_box:
@@ -121,7 +121,6 @@ class Detection(object):
                 self.Setup(yolo)
                 self.ImageProcess(current_img)
                 Frame = processedImg
-                self.Number = self.Number + 1
                 if create is None:
                     fourcc = cv2.VideoWriter_fourcc(*'MP4V')
                     create = cv2.VideoWriter(opname, fourcc, 6, (Frame.shape[1], Frame.shape[0]), True)
@@ -138,5 +137,5 @@ class Detection(object):
         cap.release()
         cv2.destroyAllWindows()
 
-    def numberTest(self):
-        print(self.Number)
+    def getNumberOfViolations(self):
+        return self.NumberOfViolations

@@ -21,10 +21,9 @@ class User(db.Model, UserMixin):
 
 class Detections(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    numberOfPeople = db.Column(db.Integer, primary_key=True)
-    numberOfViolations = db.Column(db.Integer, primary_key=True)
+    numberOfViolations = db.Column(db.Integer)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"detected('{self.numberOfPeople}', '{self.numberOfViolations}')"
+        return f"detected('{self.numberOfViolations}')"
