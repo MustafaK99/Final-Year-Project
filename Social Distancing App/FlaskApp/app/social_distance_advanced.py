@@ -101,10 +101,8 @@ class Detection(object):
 
         create = None
         frameno = 0
-        filename = "video_Trim.mp4"
         yolo = "yolo-coco"
-        opname = "Output1.mp4"
-        # cap = cv2.VideoCapture(filename)
+        opname = "Output.mp4"
         cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
         time1 = time.time()
         while (True):

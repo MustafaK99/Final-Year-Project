@@ -8,8 +8,7 @@ import os
 import pytz
 
 
-# now = datetime.now()
-# today4pm = now.replace
+
 
 
 def getLatestByRegion(ENDPOINT, AREA_TYPE, DATE):
@@ -38,11 +37,9 @@ def getLatestByRegion(ENDPOINT, AREA_TYPE, DATE):
     if response.status_code >= 400:
         raise RuntimeError(f'Request failed: {response.text}')
 
-    # print(response.url)
-    # print(response.json())
+
     rawJ = response.json()
     df = pd.DataFrame(rawJ["data"])
-    # print(df)
     return (df)
 
 
@@ -74,11 +71,9 @@ def getLatestByNation(ENDPOINT, AREA_TYPE, DATE):
     if response.status_code >= 400:
         raise RuntimeError(f'Request failed: {response.text}')
 
-    # print(response.url)
-    # print(response.json())
+
     rawJ = response.json()
     df = pd.DataFrame(rawJ["data"])
-    # print(df)
     return df
 
 

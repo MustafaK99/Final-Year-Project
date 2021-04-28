@@ -1,1 +1,42 @@
 {% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <h1>Welcome to the Social Distancing Detection App</h1>
+            <p>
+                The Covid-19 pandemic has shifted how we work and socialize with each other,
+                non-pharmaceutical interventions have thus far played an important role in stopping the
+                spread of the virus, one of these measures is social distancing. Social distancing so far has proven
+                to be an effective method in controlling the virus, however it can be difficult to see how often social distancing
+                has been violated in a particular scene or at a particular time. This app provides a method to track this data so that
+                users can adjust how they transverse a given area.
+            </p>
+
+            <h1>How to make a detection ?</h1>
+            <p>
+                To monitor social distancing in real-time, you must first register for an account or login if you already have
+                an existing account, once this is done proceed to navigate toward the new detection page, in the new detection page
+                there will be a live-video feed showing the current area your webcam is pointing to. Once you are satisfied with your
+                detection, click the end detection button. You can navigate to the detections and detection graph sections to see how many
+                violations have occurred overtime during your sessions.
+            </p>
+
+            <h1> How the app works ?</h1>
+            <p>
+                The app works by using a neural network on the real-time video feed gained from your web cam, the video stream is
+                processed to detect the number of people within a scene and the distance between them, if people within a scene are considered
+                to be violating social distancing guidelines a red bounding-box is place between them.
+            </p>
+
+
+
+
+
+        </div>
+
+    </article>
+
+
+
+
+{% endblock content %}
