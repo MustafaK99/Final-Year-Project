@@ -82,11 +82,11 @@ def latestGraphByRegion():
     AREA_TYPE = "region"
     Now = (datetime.now(pytz.timezone('Europe/London')))
     currentNow = Now.strftime("%H:%M:%S")
-    if (currentNow >= "16:00:00"):
-        DATE = (datetime.today().strftime('%Y-%m-%d'))
-    else:
-        DATE = datetime.now() - timedelta(days=1)
-        DATE = DATE.strftime('%Y-%m-%d')
+    #if (currentNow >= "16:00:00"):
+      #  DATE = (datetime.today().strftime('%Y-%m-%d'))
+    #else:
+    DATE = datetime.now() - timedelta(days=1)
+    DATE = DATE.strftime('%Y-%m-%d')
 
     df = getLatestByRegion(ENDPOINT, AREA_TYPE, DATE)
     areaName = df['areaName'].values.tolist()
@@ -104,11 +104,11 @@ def latestGraphByNation():
 
     Now = (datetime.now(pytz.timezone('Europe/London')))
     currentNow = Now.strftime("%H:%M:%S")
-    if(currentNow >= "16:00:00"):
-        DATE = (datetime.today().strftime('%Y-%m-%d'))
-    else:
-        DATE = datetime.now() - timedelta(days=1)
-        DATE = DATE.strftime('%Y-%m-%d')
+    #if(currentNow >= "16:00:00"):
+       # DATE = (datetime.today().strftime('%Y-%m-%d'))
+    #else:
+    DATE = datetime.now() - timedelta(days=1)
+    DATE = DATE.strftime('%Y-%m-%d')
     df = getLatestByNation(ENDPOINT, AREA_TYPE, DATE)
 
 
